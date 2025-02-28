@@ -20,7 +20,7 @@ class Drink(db.Model):
     # NOTE: __init__ : A constructor. Used to define how an object is created before storing it in the database
     def __init__(self, name, ingredients):
         if len(ingredients) > 50:
-            raise ValueError('Stop. No more ingredients.')
+            raise ValueError('Stop. No more ingredients. You might die')
         self.name = name
         self.ingredients = ingredients
 
