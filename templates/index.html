@@ -7,7 +7,6 @@
 {% block body %}
 <div class="content">
     <h1>MIXOLOGIST</h1>
-    <h2> Create your own drinks!!</h2>
 
     <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -18,34 +17,49 @@
         {% endif %}
     {% endwith %}
 
-    <form action ='/' method = 'post'>
-        <label for="name">Drink Name: </label>
-        <input type ="text" name ="name" required>
-        <br><br>
 
-        <label> Ingredients:</label>
-        <div id ='ingredients-list'>
-            <input type ='text' name="'ingredients" required>
-        </div>
+    <div class ="form-container">
+        <form action ="/" method ='POST'>
+        <h3> Enter the name of your drink</h3>
+            <label for="name"> Drink Name: </label>
+            <input type ="text" name ="name" id="name" required>
+                <br>
+        <h3> Enter all the ingredients</h3>
+            <label> Ingredients: </label>
+            <div id="ingredients-list">
+                <input type="text" name="ingredients[]" required>
+            </div>
 
-        <button type="button" onclick="addIngredient()"> Add Ingredients</button>
-        <br><br>
+            <button type="button" onclick="addIngredient()"> Add Ingredient: </button>
+                <br><br>
+            <button type="submit"> Create Drink</button>
+        </form>
+    </div>
 
-        <button type="submit"> Create Drink</button>
-    </form>
-    
-    <h2> Previous Drinks:</h2>
-    <ul>
-        {% for drink in drinks %}
-            <li><strong>{{ drink.name }}</strong>: {{drink.get_ingredients() | join(', ') }}</li>
-        {% endfor %}
-    </ul>
+    <h2> Previous Drinks: </h2>
+    {% if drinks %}
+        <ul>
+             {% for drink in drinks %}
+                <li>
+                    <strong> {{ drink.name }}</strong>
+                    <ul>
+                        {% for ingredient in drink.get_ingredients() %}
+                            <li> {{ ingredient }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p> No drinks created yet. Start mixing!</p>
+    {% endif %}
 </div>
 
+<!-- JAVASCRIPT -->   
 <script>
     function addIngredient() {
-        let list = document.getElementById('ingredient-list');
-        let inputs = list.GetElementsByTagName('input');
+        let list = document.getElementById('ingredients-list');
+        let inputs = list.getElementsByTagName('input');
 
         if (inputs.length >= 50) {
             alert("Stop. You can't add more than 50 ingredients!");
@@ -54,10 +68,13 @@
 
         let newInput = document.createElement('input');
         newInput.type = 'text';
-        newInput.name = 'ingredients';
-        list.appendChild(newInput);       
+        newInput.name = 'ingredients[]';
+        list.appendChild(newInput);     
+        // Add a line break after each input!
+        list.appendChild(document.createElement('br'))  
     }
 </script>
+
 {% endblock %}
 
 
