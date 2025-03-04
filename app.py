@@ -16,69 +16,62 @@ class Drink(db.Model):
     # NOTE: PickleType: Holds Python objects, which are serialized using pickle.
     # NOTE: __init__ : A constructor. Used to define how an object is created before storing it in the database
     # NOTE: Text(size) Holds a string with a maximum length of 65,535 bytes
-
     id = db.Column(db.Integer, primary_key=True)
-    # Store the ingredients as a serialized list 
-    ingredients = db.Column(db.PickleType, nullable = False)
     name = db.Column(db.Text, nullable=False) 
+    #Store the ingredients as a serialized list 
+    ingredients = db.Column(db.PickleType, nullable = False)
 
-    # Goal: esure that the ingredients are a list.. I want the code on the HTML file to appear as a bulleted list.. but I want the ingredients to be stored in the dataframe as a list.. 
     def __init__(self, name, ingredients):
-        if not isinstance(ingredients, list):
-            raise ValueError('Ingredients must be a list.')
-        if len(ingredients) >= 50:
-            raise ValueError('Stop. Too many ingredients!!!')
-        if len(ingredients) >= 20:
-            print('Calm down there...')
-
+        #if not isinstance(ingredients, list):
+            #raise ValueError('Ingredients must be a list.')
+        #if len(ingredients) >= 50:
+            #raise ValueError('Stop. Too many ingredients!!!')
+        #if len(ingredients) >= 20:
+            #print('Calm down there...')
         self.name = name
-        # NOTE: json.dumps() stores a serialized list as a JSON string
-        self.ingredients = json.dumps(ingredients) 
+        self.ingredients = ingredients
     
     def get_ingredients(self):
-        # Turn the JSON string back into a list for python purposes
-        return json.loads(self.ingredients)
+        return self.ingredients
 
 # ***** End of Drink CLASS *****
 
 
-
-
 # Flask Route for displaying all tasks
-
-# GOAl: When you add ingredients it should be a bullet list below the [] box and not create another box
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # ***** POST (add) method ******
     if request.method == 'POST':
         name = request.form.get('name')
-        ingredients = request.form.getlist('ingredients[]')
+        ingredients_json = request.form.get('ingredients')
+
+        try:
+            ingredients_list = json.loads(ingredients_json) if ingredients_json else []
+            if not isinstance(ingredients_list, list):
+                raise ValueError
+        except: 
+            flash("Invalid ingredient input!", "error")
+            return redirect('/')
 
         # NOTE: flash() is apart of Flask, and is used to send temporary messages to the user, like error notifications. The message is stored temporarly and dissapears shortly after being displayed
         # NOTE: flash('message', 'category') 
-        # NOTE: url_for() looks for the flask route function not the file. 
-            #For example  url_for('index') looks for the Flask route function index not the HTML file index.html
 
-        if not name or not ingredients: 
-            flash('Please enter a name and at least one ingredient', 'error')
-            return redirect(url_for('index'))
-        
-        if len(ingredients) >=50: 
-            flash('Too many ingredients! Maximum allowed is 50.', 'error')
-            return redirect(url_for('index'))
-        
-        new_drink = Drink(name, ingredients)
-        db.session.add(new_drink)
-        db.session.commit()
-        flash("Drink created sucessfully!", "success")
-
-        return redirect(url_for('index'))
-    # ***** end of POST (add) method ******
-
+        if name and ingredients_list:
+            new_drink = Drink(name, ingredients_list)
+            db.session.add(new_drink)
+            db.session.commit()
+            flash(f"Succesfully added {name}!", "sucess")
+        else:
+            flash("Please provide a valid drink name and ingredients")
+        return redirect("/")
+    
+     # if len(ingredients) >=50: 
+            #flash('Too many ingredients! Maximum allowed is 50.', 'error')
+            #return redirect(url_for('index'))
+    
     drinks = Drink.query.all()
-    return render_template('index.html', drinks = drinks)
- #***** end of INDEX function ******
-     
+    return render_template('index.html', drinks=drinks)
+# ************ END OF def index(): ************
 
 
 if __name__  == "__main__":

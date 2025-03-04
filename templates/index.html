@@ -26,12 +26,14 @@
                 <br>
         <h3> Enter all the ingredients</h3>
             <label> Ingredients: </label>
-            <div id="ingredients-list">
-                <input type="text" name="ingredients[]" required>
-            </div>
-
-            <button type="button" onclick="addIngredient()"> Add Ingredient: </button>
+            <div id="ingredient_list">
+                <input type="text" id="ingredient_input"
+                <button type="button" onclick="addIngredient()"> Add Ingredient</button>
+                <!-- Hide the input, but store the ingredient list-->
+                <input type="hidden" name ="ingredients" id="ingredients-hidden-list">
+                <ul id="ingredient_list"></ul>
                 <br><br>
+            </div>
             <button type="submit"> Create Drink</button>
         </form>
     </div>
@@ -57,21 +59,56 @@
 
 <!-- JAVASCRIPT -->   
 <script>
-    function addIngredient() {
-        let list = document.getElementById('ingredients-list');
-        let inputs = list.getElementsByTagName('input');
+    let ingredients = [];
+
+    document.GetElementById("add-ingredient-btn").addEventListener("click", function() {
+        let input = document.getElementById('ingredient_input');
+        let ingredient = ingredient_input.value.trim();
+
+        if (ingredient) {
+            // Store the ingredient as a full word
+            ingredient_list.push(ingredient)
+            updateIngredientDisplay();
+            // Clear the input box thing
+            ingredient_input.value ="";
+        }
+    });
+
+    function updateIngredientDisplay {
+        
+    }
+    }
+    
+       
+
+        if (ingredient == "") {
+            alert("Please enter an ingredient")
+            return;
+        }
 
         if (inputs.length >= 50) {
             alert("Stop. You can't add more than 50 ingredients!");
             return;
         }
+        // NOTE: You can add objects to arrays with simple actions like: .push() (to add at the end), .unshift() (to add at the beginning), and .splice() (to add somewhere in the middle).
 
-        let newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'ingredients[]';
-        list.appendChild(newInput);     
-        // Add a line break after each input!
-        list.appendChild(document.createElement('br'))  
+        // Add the ingredient to the end of the ingredients list
+        ingredients.push(ingredients)
+        // CLEAR THE INPUT FIELD (BOX THING)
+        input.value="";
+        // Update the ingredient-hidden-list
+
+        // NOTE: JSON.stringify can  convert any JavaScript datatype into a string with JSON.stringify()
+        document.getElementById("ingredients-hidden-list").value =JSON.stringify(ingredients);
+
+        let list = document.getElementById("ingredient_list");
+        list.innerHTML="";
+
+        ingredients.forEach(ing => {
+            let point = document.createElment("li")
+            point.textContent = ing;
+            point.appendChild(point);
+        });
     }
 </script>
 
