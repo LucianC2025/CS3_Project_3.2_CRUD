@@ -20,20 +20,23 @@
 
     <div class ="form-container">
         <form action ="/" method ='POST'>
-        <h3> Enter the name of your drink</h3>
-            <label for="name"> Drink Name: </label>
-            <input type ="text" name ="name" id="name" required>
-                <br>
-        <h3> Enter all the ingredients</h3>
-            <label> Ingredients: </label>
-            <div id="ingredient_list">
+            <h3> Enter the name of your drink</h3>
+                <label for="name"> Drink Name: </label>
+                <input type ="text" name ="name" required>
+
+            <br>
+
+            <h3> Enter all the ingredients</h3>
+                <label> Ingredients: </label>
                 <input type="text" id="ingredient_input"
-                <button type="button" onclick="addIngredient()"> Add Ingredient</button>
+                <button type="button" id="add_ingredient_btn"> Add Ingredient</button>
+                <!-- Bulleted List of added ingredients-->
+                <ul id="ingredients_display"></ul>
                 <!-- Hide the input, but store the ingredient list-->
-                <input type="hidden" name ="ingredients" id="ingredients-hidden-list">
-                <ul id="ingredient_list"></ul>
+                <input type="hidden" name ="ingredients" id="ingredients_hidden">
+
                 <br><br>
-            </div>
+
             <button type="submit"> Create Drink</button>
         </form>
     </div>
@@ -59,57 +62,45 @@
 
 <!-- JAVASCRIPT -->   
 <script>
+document.addEventListner("DOMContentLoaded", function() {
     let ingredients = [];
 
-    document.GetElementById("add-ingredient-btn").addEventListener("click", function() {
-        let input = document.getElementById('ingredient_input');
-        let ingredient = ingredient_input.value.trim();
+    document.getElementById("ingredients_display").innerHTML = "";
+    document.GetElementById("ingredients_hidden").value = "";
 
-        if (ingredient) {
-            // Store the ingredient as a full word
-            ingredient_list.push(ingredient)
-            updateIngredientDisplay();
-            // Clear the input box thing
-            ingredient_input.value ="";
+    document.GetElementById("add_ingredient_button").addEventListener("click", function() {
+        // Make the variables javascript form
+        let ingredientInput = document.getElementById('ingredient_input');
+        let ingredient = ingredientInput.value.trim();
+
+        // If the input is empty 
+        if (ingredient === "") {
+            alert("Please add an ingredient!");
+            return;
         }
-    });
-
-    function updateIngredientDisplay {
-        
-    }
-    }
-    
-       
-
-        if (ingredient == "") {
-            alert("Please enter an ingredient")
+        // NO MORE THAN 50 INGREDIENTS - Limit ingredient list to 50 ingredients
+        if (ingredients.length >= 50) {
+            alert("STOP! No more than 50 ingredients! You might die!");
             return;
         }
 
-        if (inputs.length >= 50) {
-            alert("Stop. You can't add more than 50 ingredients!");
-            return;
-        }
-        // NOTE: You can add objects to arrays with simple actions like: .push() (to add at the end), .unshift() (to add at the beginning), and .splice() (to add somewhere in the middle).
-
-        // Add the ingredient to the end of the ingredients list
-        ingredients.push(ingredients)
-        // CLEAR THE INPUT FIELD (BOX THING)
+        // Store the ingredient as a full word
+        ingredients.push(ingredient);
+        // Clear the input box thing
         input.value="";
-        // Update the ingredient-hidden-list
-
-        // NOTE: JSON.stringify can  convert any JavaScript datatype into a string with JSON.stringify()
-        document.getElementById("ingredients-hidden-list").value =JSON.stringify(ingredients);
-
-        let list = document.getElementById("ingredient_list");
-        list.innerHTML="";
+        // UPDATE hidden ingredient input
+        document.getElementById('ingredients_hidden').value =JSON.stringify(ingredients)
+        // UPDATE dispalyed ingredient list
+        let ingredientList = document.getElementById("ingredients_display");
+        list.innerHTML = "";
 
         ingredients.forEach(ing => {
-            let point = document.createElment("li")
+            let point = document.createElement("li")
             point.textContent = ing;
-            point.appendChild(point);
+            ingredientList.appendChild(point);
         });
-    }
+    });
+});
 </script>
 
 {% endblock %}
