@@ -62,11 +62,8 @@
 
 <!-- JAVASCRIPT -->   
 <script>
-document.addEventListner("DOMContentLoaded", function() {
-    let ingredients = [];
 
-    document.getElementById("ingredients_display").innerHTML = "";
-    document.GetElementById("ingredients_hidden").value = "";
+    let ingredients = [];
 
     document.GetElementById("add_ingredient_button").addEventListener("click", function() {
         // Make the variables javascript form
@@ -87,20 +84,20 @@ document.addEventListner("DOMContentLoaded", function() {
         // Store the ingredient as a full word
         ingredients.push(ingredient);
         // Clear the input box thing
-        input.value="";
+        ingredientInput.value="";
+        
         // UPDATE hidden ingredient input
         document.getElementById('ingredients_hidden').value =JSON.stringify(ingredients)
         // UPDATE dispalyed ingredient list
-        let ingredientList = document.getElementById("ingredients_display");
+        let ingredients_list = document.getElementById("ingredients_display");
         list.innerHTML = "";
 
         ingredients.forEach(ing => {
             let point = document.createElement("li")
             point.textContent = ing;
-            ingredientList.appendChild(point);
+            ingredients_list.appendChild(point);
         });
     });
-});
 </script>
 
 {% endblock %}

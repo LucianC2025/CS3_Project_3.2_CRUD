@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-import json
+import json 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///drinks.db'
@@ -22,12 +22,6 @@ class Drink(db.Model):
     ingredients = db.Column(db.PickleType, nullable = False)
 
     def __init__(self, name, ingredients):
-        #if not isinstance(ingredients, list):
-            #raise ValueError('Ingredients must be a list.')
-        #if len(ingredients) >= 50:
-            #raise ValueError('Stop. Too many ingredients!!!')
-        #if len(ingredients) >= 20:
-            #print('Calm down there...')
         self.name = name
         self.ingredients = ingredients
     
@@ -36,38 +30,32 @@ class Drink(db.Model):
 
 # ***** End of Drink CLASS *****
 
-
+# ********** ROUTES  **********
 # Flask Route for displaying all tasks
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # ***** POST (add) method ******
     if request.method == 'POST':
         name = request.form.get('name')
-        ingredients_json = request.form.get('ingredients')
+        ingredients = request.form.get('ingredients')
 
-        try:
-            ingredients_list = json.loads(ingredients_json) if ingredients_json else []
-            if not isinstance(ingredients_list, list):
-                raise ValueError
-        except: 
-            flash("Invalid ingredient input!", "error")
-            return redirect('/')
+        ingredients_list = json.loads(ingredients) 
+        #if not isinstance(ingredients_list, list):
+           # flash("Invalid ingredient input!", "error")
+           #return redirect('/')
 
         # NOTE: flash() is apart of Flask, and is used to send temporary messages to the user, like error notifications. The message is stored temporarly and dissapears shortly after being displayed
         # NOTE: flash('message', 'category') 
 
         if name and ingredients_list:
-            new_drink = Drink(name, ingredients_list)
+            new_drink = Drink(name=name, ingredients=ingredients_list)
             db.session.add(new_drink)
             db.session.commit()
             flash(f"Succesfully added {name}!", "sucess")
         else:
-            flash("Please provide a valid drink name and ingredients")
+            flash("Please provide a valid drink name and ingredients", "error")
+
         return redirect("/")
-    
-     # if len(ingredients) >=50: 
-            #flash('Too many ingredients! Maximum allowed is 50.', 'error')
-            #return redirect(url_for('index'))
     
     drinks = Drink.query.all()
     return render_template('index.html', drinks=drinks)
