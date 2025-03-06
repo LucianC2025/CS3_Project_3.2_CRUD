@@ -1,7 +1,52 @@
 html, body {
-    background-color: rgb(255, 58, 163);
+    background-color: #c9eef3;
 }
 
 h1 {
-    font-family: "Niconne", cursive;
+    font-family: "Rubik Puddles";
+    text-align: center;
+    color: #DD2D4A;
+    font-size: 50px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+label {
+    font-size: 20px;
+}
+
+.form-container {
+    background-color: #DD2D4A;
+    margin: auto;
+    width: 50%;
+    border: 3px solid #880D1E;
+    padding: 10px;
+    color: #F49CBB;
+    font-family: "Rubik Puddles";
+}
+
+.bulleted-drinks{
+    text-align: left;
+    margin: auto;
+    width: 30%;
+}
+
+.drink_display {
+    background-color: #DD2D4A;
+    margin: auto;
+    width: 50%;
+    border: 3px solid #880D1E;
+    padding: 10px;
+    color: #F49CBB;
+    font-family: "Rubik Puddles";
+    text-align: center;
+}
+
+.your_drinks {
+    font-size: 30px;
+}
+.drink_name {
+    font-size: 20px;
 }

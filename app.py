@@ -76,7 +76,7 @@ def index():
             new_drink = Drink(name=name, ingredients=ingredients_list)
             db.session.add(new_drink)
             db.session.commit()
-            flash(f'Succesfully added {name}!', 'success')
+            #flash(f'Succesfully added {name}!', 'success')
         else:
             flash("Please add a drink name and ingredients", 'error')
         return redirect("/")

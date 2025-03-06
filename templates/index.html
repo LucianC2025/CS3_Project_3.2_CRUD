@@ -44,24 +44,32 @@
         </form>
     </div>
 
-    <h2> Previous Drinks: </h2>
-    {% if drinks %}
-        <ul>
-             {% for drink in drinks %}
-                <li>
-                    <strong> {{ drink.name }} </strong>
-                    <ul>
-                        {% for ingredient in drink.get_ingredients() %}
-                            <li> {{ ingredient }}</li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p> No drinks created yet. Start mixing!</p>
-    {% endif %}
+    <br><br>
+
+
+    <div class="drink_display">
+        <h2 class="your_drinks"> Your Drinks! </h2>
+        <div class="bulleted-drinks">
+            {% if drinks %}
+                <ul>
+                    {% for drink in drinks %}
+                        <li>
+                            <strong class="drink_name"> {{ drink.name }} </strong>
+                                <ul>
+                                    {% for ingredient in drink.get_ingredients() %}
+                                        <li> {{ ingredient }}</li>
+                                    {% endfor %}
+                                </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p> No drinks created yet. Start mixing!</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
 
 <!-- JAVASCRIPT -->   
 <script>
