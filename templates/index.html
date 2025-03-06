@@ -80,13 +80,6 @@
         let ingredientInput = document.getElementById('ingredient_input');
         let ingredient = ingredientInput.value.trim();
 
-
-        // If the input is empty 
-        if (ingredient === "") {
-            alert("Please add an ingredient!");
-            return;
-        }
-
         if (ingredient && !ingredients.includes(ingredient)) {
              // NO MORE THAN 50 INGREDIENTS - Limit ingredient list to 50 ingredients
             if (ingredients.length >= 50) {

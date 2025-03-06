@@ -46,10 +46,6 @@ def index():
         #JSON string from ingredients_hidden input
         ingredients_json = request.form.get('ingredients')
 
-        # DEBUGGING!!!!
-        print(f"Raw JSON: {ingredients_json}")
-        print(f"Drink name: {name}")
-
         try:
             # Convert JSON string to python list
             ingredients_list = json.loads(ingredients_json) if ingredients_json else []
@@ -91,4 +87,4 @@ def index():
 if __name__  == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(host="0.0.0.0", port="1117", debug=True)
+    app.run(host="0.0.0.0", port="1273", debug=True)
