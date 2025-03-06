@@ -8,14 +8,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///drinks.db'
 app.config['SECRET_KEY'] = 'supersecretkey'
 db = SQLAlchemy(app)
 
+
+
 # NOTE (to self): make your own drink game - Look at javascript for dynmaic page changes 
 
 
 # ***** Drink CLASS *****
+# NOTE: PickleType: Holds Python objects, which are serialized using pickle.
+# NOTE: __init__ : A constructor. Used to define how an object is created before storing it in the database
+# NOTE: Text(size) Holds a string with a maximum length of 65,535 bytes
 class Drink(db.Model):
-    # NOTE: PickleType: Holds Python objects, which are serialized using pickle.
-    # NOTE: __init__ : A constructor. Used to define how an object is created before storing it in the database
-    # NOTE: Text(size) Holds a string with a maximum length of 65,535 bytes
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False) 
     #Store the ingredients as a serialized list 
@@ -30,36 +32,60 @@ class Drink(db.Model):
 
 # ***** End of Drink CLASS *****
 
+
+
 # ********** ROUTES  **********
+# NOTE: flash() is apart of Flask, and is used to send temporary messages to the user, like error notifications. The message is stored temporarly and dissapears shortly after being displayed
+ # NOTE: flash('message', 'category') 
 # Flask Route for displaying all tasks
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # ***** POST (add) method ******
     if request.method == 'POST':
+        # Retrieve data from the form in index.html
         name = request.form.get('name')
-        ingredients = request.form.get('ingredients')
+        #JSON string from ingredients_hidden input
+        ingredients_json = request.form.get('ingredients')
 
-        ingredients_list = json.loads(ingredients) 
-        #if not isinstance(ingredients_list, list):
-           # flash("Invalid ingredient input!", "error")
-           #return redirect('/')
+        # DEBUGGING!!!!
+        print(f"Raw JSON: {ingredients_json}")
+        print(f"Drink name: {name}")
 
-        # NOTE: flash() is apart of Flask, and is used to send temporary messages to the user, like error notifications. The message is stored temporarly and dissapears shortly after being displayed
-        # NOTE: flash('message', 'category') 
+        try:
+            # Convert JSON string to python list
+            ingredients_list = json.loads(ingredients_json) if ingredients_json else []
+            # DEBUG
+            print(f"Parsed ingredients list: {ingredients_list}")  
+            # "Clean up" ingredients list 
+            ingredients_list = [ingredient.strip() for ingredient in ingredients_list if ingredient.strip()]
 
+            if not ingredients_list:
+                flash("Please add at least one ingredient!")
+                return redirect(url_for('index'))
+            
+            if not isinstance(ingredients_list, list):
+                flash('Invalid ingredient input!', 'error')
+                return redirect(url_for('index'))
+            
+        except json.JSONDecodeError:
+            flash("Invalid ingredient input!", 'error')
+            return redirect(url_for('index'))
+     
+
+        # Save to database
         if name and ingredients_list:
             new_drink = Drink(name=name, ingredients=ingredients_list)
             db.session.add(new_drink)
             db.session.commit()
-            flash(f"Succesfully added {name}!", "sucess")
+            flash(f'Succesfully added {name}!', 'success')
         else:
-            flash("Please provide a valid drink name and ingredients", "error")
-
+            flash("Please add a drink name and ingredients", 'error')
         return redirect("/")
-    
+
     drinks = Drink.query.all()
+
     return render_template('index.html', drinks=drinks)
 # ************ END OF def index(): ************
+
 
 
 if __name__  == "__main__":
