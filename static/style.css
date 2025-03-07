@@ -14,6 +14,7 @@ h3 {
 }
 
 label {
+    font-family: "Rubik Bubbles";
     font-size: 20px;
 }
 
@@ -27,11 +28,19 @@ label {
     font-family: "Rubik Puddles";
 }
 
+input {
+    background-color:  #ffcbdd;
+    color: #d51c35;
+    font-family: "Rubik Bubbles";
+    border-color: #DD2D4A; 
+}
+/*
 .bulleted-drinks{
     text-align: left;
     margin: auto;
     width: 30%;
 }
+*/
 
 .drink_display {
     background-color: #DD2D4A;
@@ -41,12 +50,24 @@ label {
     padding: 10px;
     color: #F49CBB;
     font-family: "Rubik Puddles";
-    text-align: center;
+    /*text-align: center; */
 }
 
 .your_drinks {
     font-size: 30px;
 }
+
 .drink_name {
     font-size: 20px;
+}
+
+.bul_ingred {
+    font-family: "Rubik Bubbles";
+}
+
+.button {
+    background-color: #c9eef3;
+    border-color: #DD2D4A;
+    color: #F49CBB;
+    font-family: "Rubik Bubbles";
 }
