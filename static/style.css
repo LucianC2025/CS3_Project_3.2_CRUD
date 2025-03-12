@@ -1,38 +1,54 @@
 html, body {
-    background-color: #c9eef3;
+    background-color: #dcb6fb;
+    background-image: url("https://media0.giphy.com/media/11mTP6nbzOOuti/giphy.gif");
+    background-position: center bottom;
+    background-repeat:repeat-x;
+    background-size: contain;
+    background-attachment: fixed; 
+    /*background-position: bottom -50px left -50px;
+    /*background-repeat: no-repeat; /* Do not repeat the image */
+    /*background-size: contain;*/
 }
 
 h1 {
     font-family: "Rubik Puddles";
     text-align: center;
-    color: #DD2D4A;
-    font-size: 50px;
+    color:  #7ff69b;
+    font-size: 60px;
 }
 
 h3 {
-    font-size: 25px;
+    font-size: 30px;
 }
+
+p {
+    font-size: 18px;
+    color: #dbb5fd;
+    font-family: "Rubik Bubbles";
+}
+
 
 label {
     font-family: "Rubik Bubbles";
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .form-container {
-    background-color: #DD2D4A;
+    background-color:  #7ff69b;
     margin: auto;
     width: 50%;
-    border: 3px solid #880D1E;
+    border: 3px solid #21e633;
     padding: 10px;
-    color: #F49CBB;
+    color: #ffb4cd;
     font-family: "Rubik Puddles";
 }
 
 input {
-    background-color:  #ffcbdd;
-    color: #d51c35;
+    background-color:  #d3f2f4;
+    color: #dcb6fb;
     font-family: "Rubik Bubbles";
-    border-color: #DD2D4A; 
+    border-color: #21e633; 
+    font-size: 16px;
 }
 /*
 .bulleted-drinks{
@@ -43,12 +59,13 @@ input {
 */
 
 .drink_display {
-    background-color: #DD2D4A;
+    background-color: 
+    #7ff69b;
     margin: auto;
     width: 50%;
-    border: 3px solid #880D1E;
+    border: 3px solid #21e633;
     padding: 10px;
-    color: #F49CBB;
+    color: #ffb4cd;
     font-family: "Rubik Puddles";
     /*text-align: center; */
 }
@@ -61,13 +78,37 @@ input {
     font-size: 20px;
 }
 
+#ingredients_display {
+    font-family: "Rubik Puddles";
+    font-size: 20px;
+}
+
 .bul_ingred {
     font-family: "Rubik Bubbles";
+    font-size: 20px;
+}
+
+.drink_name {
+    color: #15d822;
+    font-size: 30px;
 }
 
 .button {
-    background-color: #c9eef3;
-    border-color: #DD2D4A;
-    color: #F49CBB;
+    background-color: #dcb6fb;
+    border-color: #f4fbbe;
+    color: #f4fbbe;
     font-family: "Rubik Bubbles";
+    font-size: 16px;
+}
+
+#submit-btn {
+    margin: -10px -60px; 
+    position:relative;
+    top:50%; 
+    left:50%;
+
+}
+
+#delete-btn {
+    font-size: 15px;
 }
