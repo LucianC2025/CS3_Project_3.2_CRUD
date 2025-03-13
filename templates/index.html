@@ -20,13 +20,14 @@
 
     <div class ="form-container">
         <form id="drinkForm" action ="/" method ='POST' autocomplete="off">
-            <h3> Enter the name of your drink </h3>
+            <h3> Name your drink... </h3>
             <label for="name"> Drink Name: </label>
             <input type ="text" name ="name" required>
 
             <br>
 
-            <h3> Enter all the ingredients</h3>
+            <h3> Choose your ingredients...</h3>
+            <h5> <i>(don't get overboard)</i></h5>
             <label for="ingredient_input"> Ingredient: </label>
             <input type="text" id="ingredient_input">
             <button class="button" type="button" id="add_ingredient_btn"> Add Ingredient</button>
@@ -57,11 +58,12 @@
                             <strong class="drink_name"> {{ drink.name }} </strong>
                                 <ul>
                                     {% for ingredient in drink.get_ingredients() %}
-                                        <li class="bul_ingred"> {{ ingredient }}</li>
+                                        <li class="bul_ingred"> <b>{{ ingredient }}</b></li>
                                     {% endfor %}
                                 </ul>
                                 <form action = "{{ url_for('delete_drink', drink_id=drink.id)}}" method="POST">
-                                    <button id="delete-btn" class="button" type="submit" onclick="return confirm('Are you sure you want to delete {{ drink.name}}?');"> Pour out drink into Sink</button>
+                                    <!-- Create an animation of drink poruing-->
+                                    <button class="button delete-btn" type="submit" onclick="return confirm('Are you sure you want to delete {{ drink.name}}?');"> Pour out drink into Sink</button>
                                 </form>
                                 <br>
                         </li>
@@ -73,6 +75,8 @@
         </div>
     </div>
 </div>
+
+<img id ="delete_gif" src="throwout_drink.gif"> 
 
 
 <!-- JAVASCRIPT -->   
@@ -95,6 +99,7 @@
         }
         ingredientInput.value = "";
     });
+    // IF THERE ARE MORE THAN 41 INGREIDNETS PUT AN ALERT OUT THAT SAYS "Please pick a shorter name"
 
     function updateIngredientsDisplay() {
         let ingredientsList = document.getElementById('ingredients_display')
@@ -123,6 +128,23 @@
             document.getElementById('ingredients_hidden').value = JSON.stringify(ingredients);
             document.getElementById("drinkForm").submit();
         }
+    });
+
+    const deleteButtons = document.querySelectorAll('.deleteButton');
+    const deleteGif = document.getElementById('delete_gif');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Stop the form from submitting
+            event.preventDefault();
+            // SHOW THE GIF!!!!!!!!
+            deleteGif.style.display = 'block';
+
+            // Make the gif dissapear after 3 seconds
+            setTimeout(()=> {
+                this.closest('form').submit();
+            }, 3000);
+        });
     });
 </script>
 

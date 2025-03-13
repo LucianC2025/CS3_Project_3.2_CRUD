@@ -84,7 +84,7 @@ def index():
 
 @app.route('/delete/<drink_id>', methods=['POST'])
 def delete_drink(drink_id):
-    drink = Drink.query.get_or_404(drink_id)
+    drink = Drink.query.get_or_404(drink_id) 
     db.session.delete(drink)
     db.session.commit()
     #flash(f'Deleted "{drink.name}" successfully!', 'success')

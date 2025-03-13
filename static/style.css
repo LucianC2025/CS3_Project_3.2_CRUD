@@ -11,7 +11,7 @@ html, body {
 }
 
 h1 {
-    font-family: "Rubik Puddles";
+    font-family: "Rubik Bubbles";
     text-align: center;
     color:  #7ff69b;
     font-size: 60px;
@@ -44,11 +44,11 @@ label {
 }
 
 input {
-    background-color:  #d3f2f4;
-    color: #dcb6fb;
+    background-color:  #ffb4cd;
+    color: #d3f2f4;
     font-family: "Rubik Bubbles";
     border-color: #21e633; 
-    font-size: 16px;
+    font-size: 20px;
 }
 /*
 .bulleted-drinks{
@@ -59,8 +59,7 @@ input {
 */
 
 .drink_display {
-    background-color: 
-    #7ff69b;
+    background-color: #7ff69b;
     margin: auto;
     width: 50%;
     border: 3px solid #21e633;
@@ -78,14 +77,19 @@ input {
     font-size: 20px;
 }
 
-#ingredients_display {
-    font-family: "Rubik Puddles";
-    font-size: 20px;
+.bulleted-drinks {
+    inline-size: 90%;
 }
 
 .bul_ingred {
     font-family: "Rubik Bubbles";
     font-size: 20px;
+}
+
+#ingredients_display {
+    font-family: "Rubik Bubbles";
+    font-size: 20px;
+    color: #11e321;
 }
 
 .drink_name {
@@ -98,7 +102,7 @@ input {
     border-color: #f4fbbe;
     color: #f4fbbe;
     font-family: "Rubik Bubbles";
-    font-size: 16px;
+    font-size: 20px;
 }
 
 #submit-btn {
@@ -111,4 +115,9 @@ input {
 
 #delete-btn {
     font-size: 15px;
+}
+
+#delete_gif {
+    display: 'none';
+    width:200px;
 }
