@@ -7,7 +7,7 @@
 {% block body %}
 <div class="content">
     <h1>MIXOLOGIST</h1>
-
+    
     <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -22,12 +22,12 @@
         <form id="drinkForm" action ="/" method ='POST' autocomplete="off">
             <h3> Name your drink... </h3>
             <label for="name"> Drink Name: </label>
-            <input type ="text" name ="name" required>
+            <input id ="drink_name_input" type ="text" name ="name" required>
 
             <br>
 
             <h3> Choose your ingredients...</h3>
-            <h5> <i>(don't get overboard)</i></h5>
+            <!--<h5><i>(don't get overboard)</i></h5> -->
             <label for="ingredient_input"> Ingredient: </label>
             <input type="text" id="ingredient_input">
             <button class="button" type="button" id="add_ingredient_btn"> Add Ingredient</button>
@@ -45,8 +45,10 @@
         </form>
     </div>
 
-    <br><br>
-
+    <br>
+    <img id ="bartending_gif" src="https://media2.giphy.com/media/HbZWeT82PBLRC/giphy.gif?cid=6c09b952noyl304rokdlxwor88mmqjmrf6z1eqzx0qitn4jn&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt = "gif1 image">
+    <img id ="delete_gif" src="https://media.tenor.com/3xDnWYrCuv4AAAAM/pour-one-out-so-long.gif" alt="gif2 image"> 
+    <br>
 
     <div class="drink_display">
         <h2 class="your_drinks"> Your Drinks! </h2>
@@ -76,8 +78,6 @@
     </div>
 </div>
 
-<img id ="delete_gif" src="throwout_drink.gif"> 
-
 
 <!-- JAVASCRIPT -->   
 <script>
@@ -89,9 +89,9 @@
         let ingredient = ingredientInput.value.trim();
 
         if (ingredient && !ingredients.includes(ingredient)) {
-             // NO MORE THAN 50 INGREDIENTS - Limit ingredient list to 50 ingredients
-            if (ingredients.length >= 50) {
-                alert("STOP! No more than 50 ingredients! You might die!");
+             // NO MORE THAN 26 INGREDIENTS - Limit ingredient list to 26 ingredients
+            if (ingredients.length >= 26) {
+                alert("STOP! No more than 26 ingredients! You might die!");
                 return;
             }
             ingredients.push(ingredient)
@@ -99,7 +99,6 @@
         }
         ingredientInput.value = "";
     });
-    // IF THERE ARE MORE THAN 41 INGREIDNETS PUT AN ALERT OUT THAT SAYS "Please pick a shorter name"
 
     function updateIngredientsDisplay() {
         let ingredientsList = document.getElementById('ingredients_display')
@@ -117,6 +116,13 @@
 
     // Reset everything when the form is submitted
     document.getElementById("drinkForm").addEventListener("submit", function(event){
+        const drinkName = document.querySelector('input[name="name"]'). value;
+
+        if (drinkName.length >41) {
+            alert("Please pick a shorter name.")
+            document.getElementById("drink_name_input").value = "";
+            event.preventDefault();
+        }
         if (ingredients.length === 0) {
             alert("Please add at least one ingredient! Or else you will only be drinking air!")
             // Prevent form submission, if no ingredients exist
@@ -126,11 +132,29 @@
             // DEBUGGING
            // console.log('Submitting ingredients:', JSON.stringify(ingredients));
             document.getElementById('ingredients_hidden').value = JSON.stringify(ingredients);
-            document.getElementById("drinkForm").submit();
+            //document.getElementById("drinkForm").submit();
         }
     });
 
-    const deleteButtons = document.querySelectorAll('.deleteButton');
+
+    const submitButton = document.getElementById('submit-btn');
+    const bartendingGif = document.getElementById('bartending_gif');
+    
+    submitButton.addEventListener('click', () => {
+        // Stop the form from submitting
+        event.preventDefault();
+        // SHOW THE GIF!!!!!!!!
+        bartendingGif.style.display = 'block';
+        const form = submitButton.closest('form')
+       
+        // Make the gif dissapear after 3 seconds
+        setTimeout(()=> {
+                form.submit();
+            }, 1000);
+        });
+  
+
+    const deleteButtons = document.querySelectorAll('.delete-btn');
     const deleteGif = document.getElementById('delete_gif');
 
     deleteButtons.forEach(button => {
@@ -140,9 +164,10 @@
             // SHOW THE GIF!!!!!!!!
             deleteGif.style.display = 'block';
 
+            const form = button.closest('form')
             // Make the gif dissapear after 3 seconds
             setTimeout(()=> {
-                this.closest('form').submit();
+                form.submit();
             }, 3000);
         });
     });

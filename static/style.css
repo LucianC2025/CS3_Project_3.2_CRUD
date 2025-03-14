@@ -14,11 +14,11 @@ h1 {
     font-family: "Rubik Bubbles";
     text-align: center;
     color:  #7ff69b;
-    font-size: 60px;
+    font-size: 45px;
 }
 
 h3 {
-    font-size: 30px;
+    font-size: 28px;
 }
 
 p {
@@ -48,7 +48,7 @@ input {
     color: #d3f2f4;
     font-family: "Rubik Bubbles";
     border-color: #21e633; 
-    font-size: 20px;
+    font-size: 18px;
 }
 /*
 .bulleted-drinks{
@@ -113,11 +113,20 @@ input {
 
 }
 
-#delete-btn {
-    font-size: 15px;
+.delete-btn {
+    font-size: 14px;
 }
 
 #delete_gif {
-    display: 'none';
-    width:200px;
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+#bartending_gif {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
 }
